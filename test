@@ -1,0 +1,6 @@
+#! /bin/bash
+
+source _faketory/bin/activate
+
+pytest --cov=faketory tests
+rm -f .coverage*;

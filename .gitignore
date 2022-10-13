@@ -1,0 +1,12 @@
+# Editors
+.DS_Store
+.vscode
+# Tests
+.pytest_cache
+
+# Virtual environments
+_env
+_faketory
+env
+venv
+**.pyc
