@@ -2,7 +2,7 @@
 
 # Create virtual environment and then activate it
 python -m venv _faketory
-source _multifaker/bin/activate
+source _faketory/bin/activate
 
 pip install --upgrade pip
 # Install poetry, then use it to install dependencies
