@@ -6,7 +6,7 @@ A simple implementation of the Factory pattern, build any number of elements wit
 ## Requirements
 
 - [Python] >= 3.7
-> IMPORTANT: This library depends on [Faker]. If by any chance you have any errors, make sure you have it installed. If you're using Python < 3.7, you can adapt this library by choosing any version of Faker that's compatible with your version. If you don't know how to build a package, you can simply copy and paste `faketory` directory to your project root and it should do the trick.
+> IMPORTANT: This library depends on [Faker]. If by any chance you have any errors, make sure you have it installed. If you're using Python < 3.7, you can adapt this library by downgrading to a version of Faker that's compatible with it, you'll have to follow `installation for devs/contributors` and either build the library or just copying `faketory` folder into your Python project's root.
 
 
 ## Installation
@@ -16,9 +16,10 @@ pip install faketory
 ```
 
 ## Installation for devs/contributors
+
 1. Clone this repository.
 2. Run `./install.sh`.
-
+> Note: You can build the library for distribution by simply running `poetry build`.
 
 ## Quick Start
 
@@ -98,6 +99,15 @@ my_model_instance = MyFactory()
 Now the attributes of `my_model_instance` will have randomly generated values by faker. For example, `my_field` could be 'Jon' and `my_other_field` could be 'Some text here'.
 
 
+## Faketory
+
+Builds 1 or more fake model instances of a Model class.
+- `_qty`: Number of fake model instances to return. Minimum value is 1.
+- `_resolver`: Function to resolve once the model instance is created. (Check Django ORM example below)
+- `_type`: Define the type of the model instance you want to return. Default: 'list', but you can have 'generator' or 'set' instead.
+- `**custom_fields`: These fields will override the Fake generated values of the Factory.
+
+
 ## Django ORM example
 
 You can pass any Django Model to `Faketory.Meta.model`, but if you want to save it to your database, make sure you pass `_resolver='save'` to your Faketory instance.
@@ -115,20 +125,9 @@ my_django_instance = Factory(_resolver='save')
 ```
 
 
-## Faketory
-
-Builds 1 or more fake model instances of a Model class.
-- `_qty`: Number of fake model instances to return. Minimum value is 1.
-- `_resolver`: Function to resolve once the model instance is created. (Check Django ORM example above)
-- `_type`: Define the type of the model instance you want to return. Default: 'list', but you can have 'generator' or 'set' instead.
-- `**custom_fields`: These fields will override the Fake generated values of the Factory.
-
 ## Fake
 
-This class simply calls the functions you get from Faker object, so you should check their docs. Here some examples:
-
-
-### General example: Gerate a name
+This class simply calls the functions you get from Faker object, so you should check their docs. Here a quick example of how you can generate a fake name:
 
 #### Faker
 
@@ -151,9 +150,6 @@ from faketory import Fake
 first_name = Fake('name').generate()
 
 ```
-
-
-### More equivalences
 
 #### Generate a random number
 
