@@ -1,3 +1,5 @@
+# Copyright (c) 2022 warevil <jg@warevil.dev>
+
 import operator
 
 from faker import Faker

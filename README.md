@@ -5,8 +5,8 @@ A simple implementation of the Factory pattern, build any number of elements wit
 
 ## Requirements
 
-- Python >= 3.7
-> IMPORTANT: This library depends on Faker. If by any chance you have any errors, make sure you have it installed. If you're using Python < 3.7, you can adapt this library by choosing any version of Faker that's compatible with your version and make it work.
+- [Python] >= 3.7
+> IMPORTANT: This library depends on [Faker]. If by any chance you have any errors, make sure you have it installed. If you're using Python < 3.7, you can adapt this library by choosing any version of Faker that's compatible with your version. If you don't know how to build a package, you can simply copy and paste `faketory` directory to your project root and it should do the trick.
 
 
 ## Installation
@@ -138,4 +138,7 @@ numbers = set(Fake('unique.random_int', min=1, max=10) for i in range(10))
 
 ## Creator
 
-Wαя€vเℓ
+Wαя€vเℓ - <jg@warevil.dev>
+
+[Faker]: <https://pypi.org/project/Faker/>
+[Python]: <https://www.python.org/downloads/>
