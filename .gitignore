@@ -4,9 +4,12 @@
 # Tests
 .pytest_cache
 
+# Build
+dist/
+
 # Virtual environments
-_env
-_faketory
-env
-venv
+_env/
+_faketory/
+env/
+venv/
 **.pyc
