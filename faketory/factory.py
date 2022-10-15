@@ -7,7 +7,8 @@ from .fake import Fake
 from .placeholders.models import SomeModel
 
 
-def build_object(__Model, __resolver=None, **fields):
+def build(__Model, __resolver=None, **fields):
+    '''Builds a fake model instance.'''
     model_fields = {
         field_name: value.generate() if isinstance(value, Fake) else value
         for field_name, value in fields.items()
@@ -20,14 +21,15 @@ def build_object(__Model, __resolver=None, **fields):
 
 
 class Faketory:
-    def __new__(
-        cls,
-        _quantity: int = 1,
-        _resolver=None,
-        _type: str = 'list',
-        **custom_fields,
-    ):
-        if _quantity < 1:
+    def __new__(cls, _qty: int = 1, _resolver=None, _type: str = 'list', **custom_fields):
+        '''
+        Returns 1 or more fake model instances of a Model class.
+        _qty: Number of fake model instances to return. Minimum value is 1.
+        _resolver: Function to resolve once the model instance is created.
+        _type: Define the type of the model instance you want to return. Default: 'list'.
+        **custom_fields: These fields will override the Fake generated values of the Factory.
+        '''
+        if _qty < 1:
             raise ValueError('Quantity must be greater than 0')
 
         instance = super().__new__(cls)
@@ -40,10 +42,8 @@ class Faketory:
         }
         fields.update(custom_fields)
 
-        objects = (
-            build_object(cls.Meta.model, _resolver, **fields) for _ in repeat(None, _quantity)
-        )
-        if _quantity == 1:
+        objects = (build(cls.Meta.model, _resolver, **fields) for _ in repeat(None, _qty))
+        if _qty == 1:
             return next(objects)
         if _type == 'generator':  # NOTE: Will not produce any objects until consumed
             return objects

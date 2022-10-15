@@ -25,7 +25,7 @@ class SampleDjangoFactory(Faketory):
     age = Fake('pyint', min_value=18)
     email = Fake('email')
     name = Fake('name')
-    year = Fake('pyint', min_value=1900, max_value=2000)
+    year = Fake('pyint', min_value=2000, max_value=2030)
 
     class Meta:
         model = SampleDjango
