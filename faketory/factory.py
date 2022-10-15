@@ -1,8 +1,11 @@
+# Copyright (c) 2022 warevil <jg@warevil.dev>
+
 import operator
 from itertools import repeat
 
 from .fake import Fake
 from .placeholders.models import SomeModel
+
 
 def build_object(__Model, __resolver=None, **fields):
     model_fields = {
@@ -20,8 +23,8 @@ class Faketory:
     def __new__(
         cls,
         _quantity: int = 1,
-        _list: bool = False,
         _resolver=None,
+        _type: str = 'list',
         **custom_fields,
     ):
         if _quantity < 1:
@@ -37,22 +40,17 @@ class Faketory:
         }
         fields.update(custom_fields)
 
-        if _list:
-            objects = [
-                build_object(cls.Meta.model, _resolver, **fields)
-                for _ in repeat(None, _quantity)
-            ]
-            if _quantity == 1:
-                return objects[0]
-            return objects
-
         objects = (
-            build_object(cls.Meta.model, _resolver, **fields)
-            for _ in repeat(None, _quantity)
+            build_object(cls.Meta.model, _resolver, **fields) for _ in repeat(None, _quantity)
         )
         if _quantity == 1:
             return next(objects)
-        return objects
+        if _type == 'generator':  # NOTE: Will not produce any objects until consumed
+            return objects
+        if _type == 'set':
+            return set(objects)
+        # list is the default format
+        return list(objects)
 
     class Meta:
         model = SomeModel

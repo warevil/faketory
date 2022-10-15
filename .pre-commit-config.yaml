@@ -4,5 +4,5 @@ repos:
       - id: validate
         types: [python]
         name: validate
-        entry: validate.sh
+        entry: ./validate.sh
         language: python
