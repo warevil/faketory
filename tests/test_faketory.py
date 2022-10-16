@@ -1,7 +1,8 @@
 from pytest import raises
 
 from .cases import BaseTestCase
-from .factories import Factory, SampleDjangoFactory, SampleFactory
+from .factories import (Factory, SampleDjangoFactory, SampleFactory,
+                        SampleHasChildFactory)
 
 
 class _Factory:
@@ -128,3 +129,42 @@ class TestSampleDjangoFactory(TestFactory):
         elements = self.factory(_qty=quantity, _resolver='save', _type='set')
         for element in elements:
             self._assert_sample_django_fields(element)
+
+
+class TestSampleHasChildFactory(BaseTestCase):
+    factory = SampleHasChildFactory
+
+    def test_blank_init_returns_one_element(self):
+        element = self.factory()
+        assert isinstance(element.email, str)
+        assert isinstance(element.child.age, int)
+        assert isinstance(element.child.email, str)
+        assert isinstance(element.child.name, str)
+
+    def test_quantity_2_or_more_returns_different_elements_on_child_faketories(self):
+        quantity = self.fake.pyint(min_value=2, max_value=20)
+        elements = self.factory(_qty=quantity)
+        at_least_one_different_element = False
+        age = None
+        email = None
+        name = None
+        for element in elements:
+            if not age:
+                age = element.child.age
+            if not email:
+                email = element.child.email
+            if not name:
+                name = element.child.name
+
+            if element.child.age != age:
+                at_least_one_different_element = True
+            if element.child.email != email:
+                at_least_one_different_element = True
+            if element.child.name != name:
+                at_least_one_different_element = True
+            assert isinstance(element.email, str)
+            assert isinstance(element.child.age, int)
+            assert isinstance(element.child.email, str)
+            assert isinstance(element.child.name, str)
+
+        assert at_least_one_different_element

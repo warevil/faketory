@@ -1,7 +1,7 @@
 from faketory.factory import Faketory
-from faketory.fake import Fake
+from faketory.gens import Fake, FaketoryGen
 
-from .models import Sample, SampleChild, SampleDjango
+from .models import Sample, SampleChild, SampleDjango, SampleHasChild
 
 
 class Factory(Faketory):
@@ -29,3 +29,11 @@ class SampleDjangoFactory(Faketory):
 
     class Meta:
         model = SampleDjango
+
+
+class SampleHasChildFactory(Faketory):
+    child = FaketoryGen(SampleFactory)
+    email = Fake('email')
+
+    class Meta:
+        model = SampleHasChild

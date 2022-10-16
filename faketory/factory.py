@@ -3,14 +3,16 @@
 import operator
 from itertools import repeat
 
-from .fake import Fake
+from .gens import Fake, FaketoryGen
 from .placeholders.models import SomeModel
 
 
 def build(__Model, __resolver=None, **fields):
     '''Builds a fake model instance.'''
     model_fields = {
-        field_name: value.generate() if isinstance(value, Fake) else value
+        field_name: value.generate()
+        if isinstance(value, Fake) or isinstance(value, FaketoryGen)
+        else value
         for field_name, value in fields.items()
     }
     model_instance = __Model(**model_fields)

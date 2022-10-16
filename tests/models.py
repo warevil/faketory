@@ -18,3 +18,9 @@ class SampleDjango(SampleChild):
     def save(self):
         # We're mocking save by replacing year
         self.year = 3000
+
+
+class SampleHasChild:
+    def __init__(self, email, child):
+        self.email = email
+        self.child = child

@@ -1,4 +1,4 @@
-from faketory.fake import _fake
+from faketory.gens import _fake
 
 
 class BaseTestCase:

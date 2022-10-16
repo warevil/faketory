@@ -1,6 +1,6 @@
 from itertools import repeat
 
-from faketory.fake import Fake
+from faketory.gens import Fake
 
 
 def test_unique_values():
