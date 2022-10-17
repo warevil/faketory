@@ -63,6 +63,15 @@ for index, my_mod in enumerate(my_models_list):
 2. Run the file using `python my_file.py`.
 
 
+## Faketory
+
+Builds 1 or more fake model instances of a Model class.
+- `_qty`: Number of fake model instances to return. Minimum value is 1.
+- `_resolver`: Function to resolve once the model instance is created. (Check Django ORM example below)
+- `_type`: Define the type of the model instance you want to return. Default: 'list', but you can have 'generator' or 'set' instead.
+- `**custom_fields`: These fields will override the Fake generated values of the Factory.
+
+
 ## Tutorial
 
 1. Import Fake and Faketory:
@@ -98,14 +107,34 @@ my_model_instance = MyFactory()
 
 Now the attributes of `my_model_instance` will have randomly generated values by faker. For example, `my_field` could be 'Jon' and `my_other_field` could be 'Some text here'.
 
+## Inheritance
 
-## Faketory
+```
+class SampleFactory(Faketory):
+    age = Fake('pyint', min_value=18)
+    email = Fake('email')
+    name = Fake('name')
 
-Builds 1 or more fake model instances of a Model class.
-- `_qty`: Number of fake model instances to return. Minimum value is 1.
-- `_resolver`: Function to resolve once the model instance is created. (Check Django ORM example below)
-- `_type`: Define the type of the model instance you want to return. Default: 'list', but you can have 'generator' or 'set' instead.
-- `**custom_fields`: These fields will override the Fake generated values of the Factory.
+    class Meta:
+        model = SampleChild
+
+```
+
+This piece of code is equivalent to:
+
+```
+class BaseSampleFactory(Faketory):
+    age = Fake('pyint', min_value=18)
+    email = Fake('email')
+
+    class Meta:
+        model = SampleChild
+
+
+class SampleFactory(BaseSampleFactory):
+    name = Fake('name')
+
+```
 
 
 ## FaketoryGen

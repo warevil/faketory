@@ -29,6 +29,13 @@ class TestFactory(_Factory.TestCase):
         element = self.factory()
         self._assert_fields(element)
 
+    def test_can_inherit_from_parent_faketory(self):
+        class ChildFactory(Factory):
+            pass
+
+        element = ChildFactory()
+        self._assert_fields(element)
+
     def test_custom_values_override_default_ones_returns_one_element(self):
         email = self.fake.email()
         name = self.fake.name()
