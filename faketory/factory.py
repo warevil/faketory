@@ -1,6 +1,7 @@
 # Copyright (c) 2022 warevil <jg@warevil.dev>
 
 import operator
+from inspect import getmembers
 from itertools import repeat
 
 from .gens import Fake, FaketoryGen
@@ -37,7 +38,7 @@ class Faketory:
         instance = super().__new__(cls)
         fields = {
             attribute: getattr(instance, attribute)
-            for attribute, var_type in type(instance).__dict__.items()
+            for attribute, var_type in getmembers(type(instance))
             if not attribute.startswith(('__', 'Meta'))
             # IMPORTANT: This is very likely to require an update
             and not str(var_type).startswith(('<bound method', '<function '))
