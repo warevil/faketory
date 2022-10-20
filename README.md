@@ -177,6 +177,17 @@ class SampleHasChildFactory(Faketory):
 
 ```
 
+You can also pass arguments to FaketoryGen:
+
+```
+class SampleHasChildFactory(Faketory):
+    child = FaketoryGen(SampleFactory, age=18)
+    email = Fake('email')
+
+    class Meta:
+        model = SampleHasChild
+
+```
 
 ## Django ORM example
 
@@ -190,9 +201,11 @@ class SampleDjangoFactory(Faketory):
     class Meta:
         model = MyDjangoModel
 
-my_django_instance = Factory(_resolver='save')
+my_django_instance = SampleDjangoFactory(_resolver='save')
 
 ```
+
+> Note: If you want to use FaketoryGen with Django model, depending on your use case, it's very likely you'll have to pass `_resolver='save'` to FaketoryGen.
 
 ## Fake
 
