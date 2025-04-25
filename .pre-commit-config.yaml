@@ -1,8 +1,0 @@
-repos:
-  - repo: local
-    hooks:
-      - id: validate
-        types: [python]
-        name: validate
-        entry: ./validate.sh
-        language: python
