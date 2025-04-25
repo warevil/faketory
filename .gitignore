@@ -1,6 +1,8 @@
 # Editors
 .DS_Store
 .vscode
+.ruff_cache
+
 # Tests
 .pytest_cache
 
@@ -8,6 +10,7 @@
 dist/
 
 # Virtual environments
+.venv
 _env/
 _faketory/
 env/
